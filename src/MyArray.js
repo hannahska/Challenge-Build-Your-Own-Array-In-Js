@@ -8,27 +8,52 @@ function MyArray(initialCapacity) {
 }
 
 MyArray.prototype.length = function () {
-
+	return this.size;
 };
 
 MyArray.prototype.push = function (value) {
-
+	this.elements[this.size] = value;
+	this.size += 1;
 };
 
 MyArray.prototype.get = function (index) {
-
+	return this.elements[index];
 };
 
 MyArray.prototype.set = function (index, value) {
+	if (index < 0) {
+		throw new Error("Index is out of bounds.");
+	} else {
+		this.elements[index] = value;
 
+		if (index > this.size) {
+			this.size = index + 1;
+		}
+	}
 };
 
 MyArray.of = function () {
+	var newArray = new MyArray(arguments.length);
 
+	if (arguments !== undefined) {
+		for (var i=0;i<arguments.length;i++) {
+			newArray.push(arguments[i]);
+		};
+	}
+	
+	return newArray;
 };
 
 MyArray.prototype.pop = function () {
-
+	var lastElem;
+	
+	if (this.size > 0) {
+		lastElem = this.elements[this.size - 1];
+		this.elements[this.size - 1] = undefined;
+		this.size -= 1;
+	}
+	
+	return lastElem;
 };
 
 MyArray.prototype.concat = function (other) {
